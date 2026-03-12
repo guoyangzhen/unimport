@@ -5,22 +5,22 @@ packages:
   - playground
 catalogs:
   dev:
-    '@antfu/eslint-config': ^7.6.1
+    '@antfu/eslint-config': ^7.7.2
     '@types/estree': ^1.0.8
-    '@types/node': ^25.3.3
+    '@types/node': ^25.5.0
     '@types/picomatch': ^4.0.2
-    '@vitest/coverage-v8': ^4.0.18
+    '@vitest/coverage-v8': ^4.1.0
     bumpp: ^10.4.1
     chokidar: ^5.0.0
-    eslint: ^10.0.2
+    eslint: ^10.0.3
     typescript: ^5.9.3
     unbuild: ^3.6.1
     vue-tsc: ^3.2.5
   playground:
-    '@vitejs/plugin-vue': ^6.0.4
+    '@vitejs/plugin-vue': ^6.0.5
     vite: ^7.3.1
     vite-plugin-inspect: ^11.3.3
-    vue: ^3.5.29
+    vue: ^3.5.30
   prod:
     acorn: ^8.16.0
     escape-string-regexp: ^5.0.0
@@ -37,10 +37,10 @@ catalogs:
     unplugin: ^3.0.0
     unplugin-utils: ^0.3.1
   test:
-    h3: ^1.15.5
+    h3: ^1.15.6
     jquery: ^3.7.1
     lit: ^3.3.2
-    vitest: ^4.0.18
+    vitest: ^4.1.0
 onlyBuiltDependencies:
   - esbuild
   - unrs-resolver
