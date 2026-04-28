@@ -207,4 +207,123 @@ describe('dedupeImports', () => {
 
     expect(warnMsg).toMatchInlineSnapshot('""')
   })
+
+  it('should dedupe correctly when disabled imports precede duplicates', () => {
+    expect(dedupeImports(
+      [
+        {
+          name: 'bar',
+          from: 'moduleX',
+          disabled: true,
+        },
+        {
+          name: 'foo',
+          from: 'module1',
+        },
+        {
+          name: 'foo',
+          from: 'module2',
+        },
+      ],
+      warnFn,
+    )).toMatchInlineSnapshot(`
+      [
+        {
+          "disabled": true,
+          "from": "moduleX",
+          "name": "bar",
+        },
+        {
+          "from": "module2",
+          "name": "foo",
+        },
+      ]
+    `)
+
+    expect(warnMsg)
+      .toMatchInlineSnapshot(`"Duplicated imports "foo", the one from "module1" has been ignored and "module2" is used"`)
+  })
+
+  it('should respect priority when disabled imports precede duplicates', () => {
+    expect(dedupeImports(
+      [
+        {
+          name: 'bar',
+          from: 'moduleX',
+          disabled: true,
+        },
+        {
+          name: 'baz',
+          from: 'moduleY',
+          disabled: true,
+        },
+        {
+          name: 'foo',
+          from: 'module1',
+          priority: 1,
+        },
+        {
+          name: 'foo',
+          from: 'module2',
+          priority: 2,
+        },
+      ],
+      warnFn,
+    )).toMatchInlineSnapshot(`
+      [
+        {
+          "disabled": true,
+          "from": "moduleX",
+          "name": "bar",
+        },
+        {
+          "disabled": true,
+          "from": "moduleY",
+          "name": "baz",
+        },
+        {
+          "from": "module2",
+          "name": "foo",
+          "priority": 2,
+        },
+      ]
+    `)
+
+    expect(warnMsg).toMatchInlineSnapshot('""')
+  })
+
+  it('should dedupe same-source duplicates after a disabled import', () => {
+    expect(dedupeImports(
+      [
+        {
+          name: 'bar',
+          from: 'moduleX',
+          disabled: true,
+        },
+        {
+          name: 'foo',
+          from: 'module1',
+        },
+        {
+          name: 'foo',
+          from: 'module1',
+        },
+      ],
+      warnFn,
+    )).toMatchInlineSnapshot(`
+      [
+        {
+          "disabled": true,
+          "from": "moduleX",
+          "name": "bar",
+        },
+        {
+          "from": "module1",
+          "name": "foo",
+        },
+      ]
+    `)
+
+    expect(warnMsg).toMatchInlineSnapshot('""')
+  })
 })
